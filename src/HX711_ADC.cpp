@@ -23,6 +23,11 @@ void HX711_ADC::setGain(uint8_t gain)  //value should be 32, 64 or 128*
 	else GAIN = 1; //128, channel A
 }
 
+int HX711_ADC::getBaud()
+{
+	return BAUD_RATE;
+}
+
 //set pinMode, HX711 gain and power up the HX711
 void HX711_ADC::begin()
 {

@@ -19,19 +19,19 @@ const int HX711_sck_1 = 5; //mcu > HX711 no 1 sck pin
 const int HX711_dout_2 = 6; //mcu > HX711 no 2 dout pin
 const int HX711_sck_2 = 7; //mcu > HX711 no 2 sck pin
 
-// baud rate
-const int baudRate = 57600;
-
 //HX711 constructor (dout pin, sck pin)
 HX711_ADC LoadCell_1(HX711_dout_1, HX711_sck_1); //HX711 1
 HX711_ADC LoadCell_2(HX711_dout_2, HX711_sck_2); //HX711 2
+
+// baud rate
+const int baudRate = LoadCell_1.getBaud();
 
 const int calVal_eepromAdress_1 = 0; // eeprom adress for calibration value load cell 1 (4 bytes)
 const int calVal_eepromAdress_2 = 4; // eeprom adress for calibration value load cell 2 (4 bytes)
 unsigned long t = 0;
 
 void setup() {
-  Serial.begin(57600); delay(10);
+  Serial.begin(baudRate); delay(10);
   Serial.println();
   Serial.println("Starting...");
 

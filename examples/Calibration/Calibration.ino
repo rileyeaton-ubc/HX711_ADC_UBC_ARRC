@@ -27,17 +27,17 @@
 const int HX711_dout = 4; //mcu > HX711 dout pin
 const int HX711_sck = 5; //mcu > HX711 sck pin
 
-// baud rate
-const int baudRate = 57600;
-
 //HX711 constructor:
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
+
+// baud rate
+const int baudRate = LoadCell.getBaud();
 
 const int calVal_eepromAdress = 0;
 unsigned long t = 0;
 
 void setup() {
-  Serial.begin(57600); delay(10);
+  Serial.begin(baudRate); delay(10);
   Serial.println();
   Serial.println("Starting...");
 

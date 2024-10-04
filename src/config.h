@@ -33,6 +33,9 @@ Note that you can also overide (reducing) the number of samples in use at any ti
 #define IGN_HIGH_SAMPLE 			1		//default value: 1
 #define IGN_LOW_SAMPLE 				1		//default value: 1
 
+//the desired baud rate for serial communication (bits per second)
+#define BAUD_RATE                9600
+
 //microsecond delay after writing sck pin high or low. This delay could be required for faster mcu's.
 //Mcu's reported to need this delay is the ESP32 (issue #35) and RP2040, the Arduino Due and ESP8266 seems to run fine without it.
 //Change the value to '0' to disable the delay.

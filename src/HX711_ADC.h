@@ -52,6 +52,7 @@ class HX711_ADC
 	public:
 		HX711_ADC(uint8_t dout, uint8_t sck); 		//constructor
 		void setGain(uint8_t gain = 128); 			//value must be 32, 64 or 128*
+		int getBaud(); 													//get the baud rate
 		void begin();								//set pinMode, HX711 gain and power up the HX711
 		void begin(uint8_t gain);					//set pinMode, HX711 selected gain and power up the HX711
 		void start(unsigned long t); 					//start HX711 and do tare 
