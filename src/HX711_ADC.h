@@ -63,8 +63,10 @@ class HX711_ADC
 		bool getTareStatus();						//returns 'true' if tareNoDelay() operation is complete
 		void setCalFactor(float cal); 				//set new calibration factor, raw data is divided by this value to convert to readable data
 		float getCalFactor(); 						//returns the current calibration factor
+		float getCal_LoadCellA(); 					//returns the calibration factor for load cell A
+		float getCal_LoadCellB(); 					//returns the calibration factor for load cell B
+		float getCal_LoadCellC(); 					//returns the calibration factor for load cell C
 		float getData(); 							//returns data from the moving average dataset 
-
 		int getReadIndex(); 						//for testing and debugging
 		float getConversionTime(); 					//for testing and debugging
 		float getSPS();								//for testing and debugging

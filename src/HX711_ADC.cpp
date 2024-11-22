@@ -229,6 +229,24 @@ float HX711_ADC::getCalFactor()
 	return calFactor;
 }
 
+//returns the calibration factor for load cell A
+float HX711_ADC::getCal_LoadCellA() 
+{
+	return LOAD_CELL_A_CALIBRATION;
+}
+
+//returns the calibration factor for load cell A
+float HX711_ADC::getCal_LoadCellB() 
+{
+	return LOAD_CELL_B_CALIBRATION;
+}
+
+//returns the calibration factor for load cell A
+float HX711_ADC::getCal_LoadCellC() 
+{
+	return LOAD_CELL_C_CALIBRATION;
+}
+
 //call the function update() in loop or from ISR
 //if conversion is ready; read out 24 bit data and add to dataset, returns 1
 //if tare operation is complete, returns 2

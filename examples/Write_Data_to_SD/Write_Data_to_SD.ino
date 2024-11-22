@@ -19,7 +19,7 @@ int values[] = {1, 2, 3};
 int currentIndex = 0;
 
 // Load cell calibration factor found using the Calibrate.ino example
-const float CALIBRATION_VALUE = 82.0;
+const float CALIBRATION_VALUE = LoadCell.getCal_LoadCellA();
 unsigned long t = 0;
 
 void setup() {
