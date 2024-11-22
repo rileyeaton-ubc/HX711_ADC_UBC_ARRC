@@ -42,4 +42,9 @@ Note that you can also overide (reducing) the number of samples in use at any ti
 //if required you can change the value to '1' to disable interrupts when writing to the sck pin.
 #define SCK_DISABLE_INTERRUPTS		0		//default value: 0
 
+//float representing the calibration factor, for each load cell
+#define LOAD_CELL_A_CALIBRATION 82.0
+#define LOAD_CELL_B_CALIBRATION 82.0
+#define LOAD_CELL_C_CALIBRATION 82.0
+
 #endif
