@@ -31,6 +31,7 @@ void setup() {
   // Wait for the Serial Monitor to connect (for native USB boards)
   while (!Serial);
 
+  Serial.println("Beginning Load Cell startup...");
   // ALL LOAD SELL SETIP
   LoadCell.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
@@ -43,9 +44,10 @@ void setup() {
   }
   else {
     LoadCell.setCalFactor(CALIBRATION_VALUE); // user set calibration value (float), initial value 1.0 may be used for this sketch
-    Serial.println("Startup is complete");
+    Serial.println("Load Cell startup complete.");
   }
   while (!LoadCell.update());
+  
   // ALL SD CARD SETUP
   Serial.print("Initializing SD card...");
   if (!SD.begin(chipSelect)) {
