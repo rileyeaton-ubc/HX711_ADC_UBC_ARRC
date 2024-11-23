@@ -36,7 +36,7 @@ void setup() {
   LoadCell.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
   unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
-  boolean _tare = true; //set this to false if you don't want tare to be performed in the next step
+  bool _tare = true; //set this to false if you don't want tare to be performed in the next step
   LoadCell.start(stabilizingtime, _tare);
   if (LoadCell.getTareTimeoutFlag() || LoadCell.getSignalTimeoutFlag()) {
     Serial.println("Timeout, check MCU>HX711 wiring and pin designations");
@@ -91,7 +91,7 @@ void loop() {
     while (true);
   }
 
-  static boolean newDataReady = 0; // used to identify that new data is ready for retrieval
+  static bool newDataReady = 0; // used to identify that new data is ready for retrieval
 
   // Check for new data/start next conversion:
   if (LoadCell.update()) newDataReady = true;
