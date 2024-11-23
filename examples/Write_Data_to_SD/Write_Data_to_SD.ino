@@ -36,7 +36,7 @@ void setup() {
   LoadCell.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
   unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
-  bool _tare = true; //set this to false if you don't want tare to be performed in the next step
+  bool _tare = true; // set this to false if you don't want tare to be performed in the next step
   LoadCell.start(stabilizingtime, _tare);
   if (LoadCell.getTareTimeoutFlag() || LoadCell.getSignalTimeoutFlag()) {
     Serial.println("Timeout, check MCU>HX711 wiring and pin designations");
@@ -59,15 +59,20 @@ void setup() {
   // Open the file in append mode
   csvLogFile = SD.open(csv_filename, FILE_WRITE);
   if (!csvLogFile) {
-    csvLogFile = SD.open(csv_filename, O_CREAT);
     while(!csvLogFile) {
+      csvLogFile = SD.open(csv_filename, O_CREAT);
+      delay(1000)
       if (millis() > 10000) break;
     }
     if (!csvLogFile) {
       Serial.println("Error opening CSV file. Please check the filename and try again");
       while (true); // Stop if file opening fails
-    } 
+    }
   }
+
+  // Write headers to the CSV file
+  csvLogFile.println("Time (ms), Load Cell Weight (g)");
+  csvLogFile.flush();
 
   // Print successful start message
   Serial.println("CSV file successfully opened.");
