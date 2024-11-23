@@ -116,6 +116,7 @@ void loop() {
         // LOGGING (if required)
         // Serial.print("Printed line ");
         // Serial.println(currentIndex);
+        t = millis();
       } else {
         // If the file isn't open, try reopening it
         csvLogFile = SD.open(csv_filename, FILE_WRITE);
