@@ -92,40 +92,35 @@ void loop() {
     while (true);
   }
 
-  static boolean newDataReady = 0; // used to identify that new data is ready for retrieval
-
-  // Check for new data/start next conversion:
-  if (LoadCell.update()) newDataReady = true;
-
   // Get smoothed value from the dataset:
-  if (newDataReady) {
-    // If there is a write delay, check to make sure that amount of time has passed
-    if (millis() > t + csv_write_delay) {
-      // Round the load cell value to an integer (this will be in grams)
-      int loadcell_val = round(LoadCell.getData());
-      // Write alternating values to the CSV file continuously
-      if (csvLogFile) {
-        currentIndex = currentIndex + 1;
-        // Write the current milisecond value followed by the load cell value
-        csvLogFile.print(millis());
-        csvLogFile.print(",");
-        csvLogFile.println(loadcell_val);
+  LoadCell.update()
 
-        // Flush the file buffer to ensure data is written to the SD card
-        csvLogFile.flush();
+  // If there is a write delay, check to make sure that amount of time has passed
+  if (millis() > t + csv_write_delay) {
+    // Round the load cell value to an integer (this will be in grams)
+    int loadcell_val = round(LoadCell.getData());
+    // Write alternating values to the CSV file continuously
+    if (csvLogFile) {
+      currentIndex = currentIndex + 1;
+      // Write the current milisecond value followed by the load cell value
+      csvLogFile.print(millis());
+      csvLogFile.print(",");
+      csvLogFile.println(loadcell_val);
 
-        // LOGGING (if required)
-        // Serial.print("Printed line ");
-        // Serial.println(currentIndex);
-      } else {
-        // If the file isn't open, try reopening it
-        csvLogFile = SD.open(csv_filename, FILE_WRITE);
-        delay(100);
-        if (!csvLogFile) {
-          Serial.println("Error reopening CSV file. Please check the SD card or file and try again.");
-          while (true); // Stop if file opening fails again
-        }
+      // Flush the file buffer to ensure data is written to the SD card
+      csvLogFile.flush();
+
+      // LOGGING (if required)
+      // Serial.print("Printed line ");
+      // Serial.println(currentIndex);
+    } else {
+      // If the file isn't open, try reopening it
+      csvLogFile = SD.open(csv_filename, FILE_WRITE);
+      delay(100);
+      if (!csvLogFile) {
+        Serial.println("Error reopening CSV file. Please check the SD card or file and try again.");
+        while (true); // Stop if file opening fails again
       }
     }
-  }  
+  }
 }
