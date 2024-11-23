@@ -2,7 +2,7 @@
 
 This repo is a fork of olkal's HX711_ADC repository for non-blocking, smoothed data (moving average) from weight scales.
 
-The intention of this fork is to add functionality for UBC's Arial Robotics & Rocketry Club's purposes. This is mainly centered around logging weight data from load cells to SD card memory. The key arduino C++ script to accomplish this is located [here](https://github.com/rileyeaton-ubc/HX711_ADC_UBC_ARRC/blob/master/examples/Write_Data_to_SD/Write_Data_to_SD.ino)
+The intention of this fork is to add functionality for the purposes of UBC's Arial Robotics & Rocketry Club. This is mainly centered around logging weight data from load cells to SD card memory. This will allow the avionics team to determine the thrust curve for our rocket motors. The key C++ arduino script to accomplish this is located [here](https://github.com/rileyeaton-ubc/HX711_ADC_UBC_ARRC/blob/master/examples/Write_Data_to_SD/Write_Data_to_SD.ino)
 
 # Original HX711_ADC README
 
