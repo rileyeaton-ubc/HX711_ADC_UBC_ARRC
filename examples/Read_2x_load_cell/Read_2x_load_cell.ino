@@ -14,13 +14,13 @@
 #endif
 
 //pins:
-const int HX711_dout_1 = 4; //mcu > HX711 no 1 dout pin
-const int HX711_sck_1 = 5; //mcu > HX711 no 1 sck pin
-const int HX711_dout_2 = 6; //mcu > HX711 no 2 dout pin
-const int HX711_sck_2 = 7; //mcu > HX711 no 2 sck pin
+const int HX711_dout_1 = 6; //mcu > HX711 no 1 dout pin
+const int HX711_sck_1 = 7; //mcu > HX711 no 1 sck pin
+const int HX711_dout_2 = 8; //mcu > HX711 no 2 dout pin
+const int HX711_sck_2 = 9; //mcu > HX711 no 2 sck pin
 
 // baud rate
-const int baudRate = 57600;
+const int baudRate = 9600;
 
 //HX711 constructor (dout pin, sck pin)
 HX711_ADC LoadCell_1(HX711_dout_1, HX711_sck_1); //HX711 1
@@ -31,15 +31,15 @@ const int calVal_eepromAdress_2 = 4; // eeprom adress for calibration value load
 unsigned long t = 0;
 
 void setup() {
-  Serial.begin(57600); delay(10);
+  Serial.begin(baudRate); delay(10);
   Serial.println();
   Serial.println("Starting...");
 
   float calibrationValue_1; // calibration value load cell 1
   float calibrationValue_2; // calibration value load cell 2
 
-  calibrationValue_1 = 696.0; // uncomment this if you want to set this value in the sketch
-  calibrationValue_2 = 733.0; // uncomment this if you want to set this value in the sketch
+  calibrationValue_1 = 82.0; // uncomment this if you want to set this value in the sketch
+  calibrationValue_2 = 82.0; // uncomment this if you want to set this value in the sketch
 #if defined(ESP8266) || defined(ESP32)
   //EEPROM.begin(512); // uncomment this if you use ESP8266 and want to fetch the value from eeprom
 #endif
