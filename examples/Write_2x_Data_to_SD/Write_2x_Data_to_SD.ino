@@ -137,9 +137,9 @@ void loop() {
         // Write the current milisecond value followed by the load cell value
         csvLogFile.print(millis());
         csvLogFile.print(",");
-        csvLogFile.print(loadcel_1_val);
+        csvLogFile.print(loadcell_1_val);
         csvLogFile.print(",");
-        csvLogFile.println(loadcel_2_val);
+        csvLogFile.println(loadcell_2_val);
 
         // Flush the file buffer to ensure data is written to the SD card
         csvLogFile.flush();
