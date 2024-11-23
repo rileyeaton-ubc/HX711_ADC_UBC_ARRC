@@ -1,4 +1,4 @@
-# UBC ARRC FORK
+# UBC ARRC Fork
 
 This repo is a fork of olkal's HX711_ADC repository for non-blocking, smoothed data (moving average) from weight scales.
 
