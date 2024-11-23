@@ -47,7 +47,7 @@ void setup() {
   LoadCell_3.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
   unsigned long stabilizingtime = 2000; // tare preciscion can be improved by adding a few seconds of stabilizing time
-  boolean _tare = true; //set this to false if you don't want tare to be performed in the next step
+  bool _tare = true; //set this to false if you don't want tare to be performed in the next step
   byte loadcell_1_rdy = 0;
   byte loadcell_2_rdy = 0;
   byte loadcell_3_rdy = 0;
@@ -131,7 +131,7 @@ void loop() {
     while (true);
   }
 
-  static boolean newDataReady = 0; // used to identify that new data is ready for retrieval
+  static bool newDataReady = 0; // used to identify that new data is ready for retrieval
 
   // Check for new data/start next conversion:
   if (LoadCell_1.update()) newDataReady = true;
