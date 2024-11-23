@@ -1,12 +1,21 @@
+# UBC ARRC FORK
+
+This repo is a fork of olkal's HX711_ADC repository for non-blocking, smoothed data (moving average) from weight scales.
+
+The intention of this fork is to add functionality for UBC's Arial Robotics & Rocketry Club's purposes. This is mainly centered around logging weight data from load cells to SD card memory. The key arduino C++ script to accomplish this is located [here](https://github.com/rileyeaton-ubc/HX711_ADC_UBC_ARRC/blob/master/examples/Write_Data_to_SD/Write_Data_to_SD.ino)
+
+# Original HX711_ADC README
+
 Latest release and change log here: https://github.com/olkal/HX711_ADC/releases
 
 This an Arduino library for the HX711 24-bit ADC for weight scales.
 Data retrieval from the HX711 is done without blocking the mcu, also on the 10SPS rate setting and with Multiple HX711's performing conversions simultaneously.
 Tare function can also be performed without blocking the mcu.
- 
+
 Filtering and smoothing: "Moving average" method from a rolling data set combined with removal of high/low outliers is used for the retrieved value.
 
 Selectable values in the config.h file:
+
 - Moving average data set of 1, 2, 4, 8, 16, 32, 64 or 128 samples (default:16).
 - Ignore high outlier; one sample is added to the data set, the peak high value of all samples in the data set is ignored (default:1)
 - Ignore low outlier; one sample is added to the data set, the peak low value of all samples in the data set is ignored (default:1)
@@ -24,13 +33,14 @@ Start up and tare: from start-up/reset, the tare function seems to be more accur
 Hardware and ADC noise:
 Wires between HX711 and load cell should be twisted and kept as short as possible.
 Most available HX711 modules seems to follow the reference design, but be aware that some modules are poorly designed with under-sized capacitors, and noisy readings.
-The Sparkfun module seems to differ from most other available modules as it has some additional components for noise reduction. 
+The Sparkfun module seems to differ from most other available modules as it has some additional components for noise reduction.
 
 To get started: Install the library from Arduino Library Manager. Begin with the Calibration.ino example file, then move on to the Read_1x_load_cell.ino example file.
 
 If you need to keep the tare/zero-offset value after a device reboot, please see example Persistent_zero_offset.ino example file.
 
 HX711_ADC Library Documentation
+
 ```
 Initialization:
  begin(): Initializes the communication with the HX711 and sets the gain to 128 (default).
