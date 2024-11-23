@@ -44,9 +44,10 @@ void setup() {
   }
   else {
     LoadCell.setCalFactor(CALIBRATION_VALUE); // user set calibration value (float), initial value 1.0 may be used for this sketch
+    while (!LoadCell.update());
     Serial.println("Load Cell startup complete.");
   }
-  while (!LoadCell.update());
+  
   // ALL SD CARD SETUP
   Serial.print("Initializing SD card...");
   if (!SD.begin(chipSelect)) {
