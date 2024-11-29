@@ -31,11 +31,12 @@ void setup() {
   // Wait for the Serial Monitor to connect (for native USB boards)
   while (!Serial);
 
+  Serial.println("Beginning Load Cell startup...");
   // ALL LOAD SELL SETIP
   LoadCell.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
   unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
-  boolean _tare = true; //set this to false if you don't want tare to be performed in the next step
+  bool _tare = true; // set this to false if you don't want tare to be performed in the next step
   LoadCell.start(stabilizingtime, _tare);
   if (LoadCell.getTareTimeoutFlag() || LoadCell.getSignalTimeoutFlag()) {
     Serial.println("Timeout, check MCU>HX711 wiring and pin designations");
@@ -43,9 +44,10 @@ void setup() {
   }
   else {
     LoadCell.setCalFactor(CALIBRATION_VALUE); // user set calibration value (float), initial value 1.0 may be used for this sketch
-    Serial.println("Startup is complete");
+    while (!LoadCell.update());
+    Serial.println("Load Cell startup complete.");
   }
-  while (!LoadCell.update());
+  
   // ALL SD CARD SETUP
   Serial.print("Initializing SD card...");
   if (!SD.begin(chipSelect)) {
@@ -57,15 +59,20 @@ void setup() {
   // Open the file in append mode
   csvLogFile = SD.open(csv_filename, FILE_WRITE);
   if (!csvLogFile) {
-    csvLogFile = SD.open(csv_filename, O_CREAT);
     while(!csvLogFile) {
+      csvLogFile = SD.open(csv_filename, O_CREAT);
+      delay(1000)
       if (millis() > 10000) break;
     }
     if (!csvLogFile) {
       Serial.println("Error opening CSV file. Please check the filename and try again");
       while (true); // Stop if file opening fails
-    } 
+    }
   }
+
+  // Write headers to the CSV file
+  csvLogFile.println("Time (ms), Load Cell Weight (g)");
+  csvLogFile.flush();
 
   // Print successful start message
   Serial.println("CSV file successfully opened.");
@@ -90,7 +97,7 @@ void loop() {
     while (true);
   }
 
-  static boolean newDataReady = 0; // used to identify that new data is ready for retrieval
+  static bool newDataReady = 0; // used to identify that new data is ready for retrieval
 
   // Check for new data/start next conversion:
   if (LoadCell.update()) newDataReady = true;
@@ -124,6 +131,7 @@ void loop() {
           while (true); // Stop if file opening fails again
         }
       }
+      t = millis();
     }
   }  
 }
