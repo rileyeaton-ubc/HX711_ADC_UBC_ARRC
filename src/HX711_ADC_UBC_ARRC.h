@@ -6,8 +6,8 @@
    -------------------------------------------------------------------------------------
 */
 
-#ifndef HX711_ADC_h
-#define HX711_ADC_h
+#ifndef HX711_ADC_UBC_ARRC_h
+#define HX711_ADC_UBC_ARRC_h
 
 #include <Arduino.h>
 #include "config.h"
@@ -44,7 +44,7 @@ Note: HX711_ADC configuration values has been moved to file config.h
 #define 	DIVB 7
 #endif
 
-#define SIGNAL_TIMEOUT	100
+#define SIGNAL_TIMEOUT	1
 
 class HX711_ADC
 {	

@@ -23,8 +23,8 @@ Note that you can also overide (reducing) the number of samples in use at any ti
 
 */
 
-#ifndef HX711_ADC_config_h
-#define HX711_ADC_config_h
+#ifndef HX711_ADC_UBC_ARRC_config_h
+#define HX711_ADC_UBC_ARRC_config_h
 
 //number of samples in moving average dataset, value must be 1, 2, 4, 8, 16, 32, 64 or 128.
 #define SAMPLES 					16		//default value: 16
