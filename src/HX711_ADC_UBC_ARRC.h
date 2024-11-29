@@ -6,8 +6,8 @@
    -------------------------------------------------------------------------------------
 */
 
-#ifndef HX711_ADC_h
-#define HX711_ADC_h
+#ifndef HX711_ADC_UBC_ARRC_h
+#define HX711_ADC_UBC_ARRC_h
 
 #include <Arduino.h>
 #include "config.h"

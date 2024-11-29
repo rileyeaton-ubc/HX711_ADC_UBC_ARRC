@@ -1,5 +1,5 @@
 #include <SD.h>
-#include <HX711_ADC.h>
+#include <HX711_ADC_UBC_ARRC.h>
 #include <math.h>
 
 // file init
