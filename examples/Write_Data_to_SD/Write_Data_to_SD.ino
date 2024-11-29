@@ -15,7 +15,7 @@ const int csv_write_delay = 0;
 // Load cell calibration factor found using the Calibrate.ino example
 const float CALIBRATION_VALUE = LoadCell.getCal_LoadCellA();
 // Filename for SD logging
-const String csv_filename = "data_11.csv";
+const String csv_filename = "data_16.csv";
 
 // SD chip select pin
 const int chipSelect = 10;
@@ -27,7 +27,7 @@ bool loggingEnd = 0;
 
 void setup() {
   // Start Serial communication
-  Serial.begin(9600);
+  Serial.begin(115200);
   // Wait for the Serial Monitor to connect (for native USB boards)
   while (!Serial);
 

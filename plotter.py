@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 # Load data from CSV
-data = pd.read_csv('F:\data_11.csv', header=None, names=['timestamp', 'weight'])
+data = pd.read_csv('F:\data_16.csv', header=None, names=['timestamp', 'weight'])
 
 # Create dot plot
 fig = px.scatter(
