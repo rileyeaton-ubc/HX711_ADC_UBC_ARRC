@@ -1,5 +1,5 @@
 #include <SD.h>
-#include <HX711_ADC.h>
+#include <HX711_ADC_UBC_ARRC.h>
 #include <math.h>
 
 // file init
@@ -16,10 +16,10 @@ const int logging_seconds = 10;
 // Number of miliseconds between CSV writes
 const int csv_write_delay = 0;
 // Load cell calibration factors found using the Calibrate.ino example
-const float CALIBRATION_VALUE_1 = LoadCell.getCal_LoadCellA();
-const float CALIBRATION_VALUE_2 = LoadCell.getCal_LoadCellB();
+const float CALIBRATION_VALUE_1 = LoadCell_1.getCal_LoadCellA();
+const float CALIBRATION_VALUE_2 = LoadCell_2.getCal_LoadCellB();
 // Filename for SD logging
-const String csv_filename = "data_11.csv";
+const String csv_filename = "data_15.csv";
 
 // SD chip select pin
 const int chipSelect = 10;
@@ -31,7 +31,7 @@ bool loggingEnd = 0;
 
 void setup() {
   // Start Serial communication
-  Serial.begin(9600);
+  Serial.begin(115200);
   // Wait for the Serial Monitor to connect (for native USB boards)
   while (!Serial);
 
@@ -82,7 +82,7 @@ void setup() {
   if (!csvLogFile) {
     while(!csvLogFile) {
       csvLogFile = SD.open(csv_filename, O_CREAT);
-      delay(1000)
+      delay(1000);
       if (millis() > 10000) break;
     }
     if (!csvLogFile) {

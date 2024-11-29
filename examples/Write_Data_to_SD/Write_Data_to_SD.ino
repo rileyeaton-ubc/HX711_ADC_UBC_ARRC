@@ -61,7 +61,7 @@ void setup() {
   if (!csvLogFile) {
     while(!csvLogFile) {
       csvLogFile = SD.open(csv_filename, O_CREAT);
-      delay(1000)
+      delay(1000);
       if (millis() > 10000) break;
     }
     if (!csvLogFile) {
