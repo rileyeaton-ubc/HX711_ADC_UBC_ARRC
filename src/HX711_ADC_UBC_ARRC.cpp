@@ -235,16 +235,22 @@ float HX711_ADC::getCal_LoadCellA()
 	return LOAD_CELL_A_CALIBRATION;
 }
 
-//returns the calibration factor for load cell A
+//returns the calibration factor for load cell B
 float HX711_ADC::getCal_LoadCellB() 
 {
 	return LOAD_CELL_B_CALIBRATION;
 }
 
-//returns the calibration factor for load cell A
+//returns the calibration factor for load cell C
 float HX711_ADC::getCal_LoadCellC() 
 {
 	return LOAD_CELL_C_CALIBRATION;
+}
+
+//returns the calibration factor for load cell D
+float HX711_ADC::getCal_LoadCellD() 
+{
+	return LOAD_CELL_D_CALIBRATION;
 }
 
 //call the function update() in loop or from ISR

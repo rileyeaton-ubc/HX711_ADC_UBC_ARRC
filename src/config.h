@@ -46,5 +46,6 @@ Note that you can also overide (reducing) the number of samples in use at any ti
 #define LOAD_CELL_A_CALIBRATION 82.0
 #define LOAD_CELL_B_CALIBRATION 82.0
 #define LOAD_CELL_C_CALIBRATION 82.0
+#define LOAD_CELL_D_CALIBRATION 82.0
 
 #endif
