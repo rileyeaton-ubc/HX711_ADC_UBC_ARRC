@@ -66,6 +66,7 @@ class HX711_ADC
 		float getCal_LoadCellA(); 					//returns the calibration factor for load cell A
 		float getCal_LoadCellB(); 					//returns the calibration factor for load cell B
 		float getCal_LoadCellC(); 					//returns the calibration factor for load cell C
+		float getCal_LoadCellD(); 					//returns the calibration factor for load cell D
 		float getData(); 							//returns data from the moving average dataset 
 		int getReadIndex(); 						//for testing and debugging
 		float getConversionTime(); 					//for testing and debugging
