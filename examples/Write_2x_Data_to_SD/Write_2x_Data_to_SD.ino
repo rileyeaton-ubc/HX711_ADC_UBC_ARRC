@@ -19,7 +19,7 @@ const int csv_write_delay = 0;
 const float CALIBRATION_VALUE_1 = LoadCell_1.getCal_LoadCellA();
 const float CALIBRATION_VALUE_2 = LoadCell_2.getCal_LoadCellB();
 // Filename for SD logging
-const String csv_filename = "data_15.csv";
+const String csv_filename = "data_2_1.csv";
 
 // SD chip select pin
 const int chipSelect = 10;
@@ -77,21 +77,33 @@ void setup() {
   }
   Serial.println("SD card initialized.");
 
-  // Open the file in append mode
-  csvLogFile = SD.open(csv_filename, FILE_WRITE);
-  if (!csvLogFile) {
-    while(!csvLogFile) {
-      csvLogFile = SD.open(csv_filename, O_CREAT);
-      delay(1000);
-      if (millis() > 10000) break;
-    }
-    if (!csvLogFile) {
-      Serial.println("Error opening CSV file. Please check the filename and try again");
-      while (true); // Stop if file opening fails
-    }
-  }
+  // Check if the user wants to wipe the contents of the logging file before starting
+  // Serial.println("Would you like to wipe the contents of the logging file on the SD card? (Y/N): ");
+  // boolean _resume = false;
+  // String answer = "";
+  // while (!_resume) {
+  //   if (Serial.available() > 0) {
+  //     while (Serial.available() == 0) {}
+  //     answer = Serial.readString(); // Read the yes or no answer
+  //     if (answer.length() > 0) {
+  //       if (answer == "Y" || answer = "y") {
+  //         // Remove the logging file which will be created again below
+          
+  //       }
+  //       _resume = true; // Resume when a valid answer is entered
+  //     } else {
+  //       Serial.println("Please enter Y or N to make your selection: ");
+  //     }
+  //   }
+  // }
+
+  // Serial.print("Wiping contents of logging file...");
+  // SD.remove(csv_filename);
+  // SD.open(csv_filename, FILE_WRITE).flush();
+  // Serial.println("Logging file wiped.");
 
   // Write headers to the CSV file
+  csvLogFile = SD.open(csv_filename, FILE_WRITE);
   csvLogFile.println("Time (ms), Load Cell 1 Weight (g), Load Cell 2 Weight (g)");
   csvLogFile.flush();
 
