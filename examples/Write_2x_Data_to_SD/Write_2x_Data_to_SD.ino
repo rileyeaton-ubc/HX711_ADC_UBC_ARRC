@@ -4,18 +4,22 @@
 
 // file init
 File csvLogFile;
-// pins for load cell
-const int HX711_dout = 8; // mcu > HX711 dout pin
-const int HX711_sck = 9; // mcu > HX711 sck pin
-HX711_ADC LoadCell(HX711_dout, HX711_sck); // constructor
+// pins for load cells
+const int HX711_dout_1 = 6; // mcu > HX711 no 1 dout pin
+const int HX711_sck_1 = 7; // mcu > HX711 no 1 sck pin
+const int HX711_dout_2 = 8; // mcu > HX711 no 2 dout pin
+const int HX711_sck_2 = 9; // mcu > HX711 no 2 sck pin
+HX711_ADC LoadCell_1(HX711_dout_1, HX711_sck_1); // HX711 1
+HX711_ADC LoadCell_2(HX711_dout_2, HX711_sck_2); // HX711 2
 // Number of seconds to log to SD for
 const int logging_seconds = 10;
 // Number of miliseconds between CSV writes
 const int csv_write_delay = 0;
-// Load cell calibration factor found using the Calibrate.ino example
-const float CALIBRATION_VALUE = LoadCell.getCal_LoadCellA();
+// Load cell calibration factors found using the Calibrate.ino example
+const float CALIBRATION_VALUE_1 = LoadCell_1.getCal_LoadCellA();
+const float CALIBRATION_VALUE_2 = LoadCell_2.getCal_LoadCellB();
 // Filename for SD logging
-const String csv_filename = "data_16.csv";
+const String csv_filename = "data_15.csv";
 
 // SD chip select pin
 const int chipSelect = 10;
@@ -32,22 +36,39 @@ void setup() {
   while (!Serial);
 
   Serial.println("Beginning Load Cell startup...");
+  int loadcell_fail = 0;
   // ALL LOAD SELL SETIP
-  LoadCell.begin();
+  LoadCell_1.begin();
+  LoadCell_2.begin();
   //LoadCell.setReverseOutput(); //uncomment to turn a negative output value to positive
-  unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
-  bool _tare = true; // set this to false if you don't want tare to be performed in the next step
-  LoadCell.start(stabilizingtime, _tare);
-  if (LoadCell.getTareTimeoutFlag() || LoadCell.getSignalTimeoutFlag()) {
-    Serial.println("Timeout, check MCU>HX711 wiring and pin designations");
-    while (true);
+  unsigned long stabilizingtime = 2000; // tare preciscion can be improved by adding a few seconds of stabilizing time
+  bool _tare = true; //set this to false if you don't want tare to be performed in the next step
+  byte loadcell_1_rdy = 0;
+  byte loadcell_2_rdy = 0;
+  while ((loadcell_1_rdy + loadcell_2_rdy) < 2) { //run startup, stabilization and tare, both modules simultaniously
+    if (!loadcell_1_rdy) loadcell_1_rdy = LoadCell_1.startMultiple(stabilizingtime, _tare);
+    if (!loadcell_2_rdy) loadcell_2_rdy = LoadCell_2.startMultiple(stabilizingtime, _tare);
   }
-  else {
-    LoadCell.setCalFactor(CALIBRATION_VALUE); // user set calibration value (float), initial value 1.0 may be used for this sketch
-    while (!LoadCell.update());
+  if (LoadCell_1.getTareTimeoutFlag()) {
+    Serial.println("Timeout, check MCU>HX711 no.1 wiring and pin designations");
+    loadcell_fail = 1;
+  }
+  if (LoadCell_2.getTareTimeoutFlag()) {
+    Serial.println("Timeout, check MCU>HX711 no.2 wiring and pin designations");
+    loadcell_fail = 1;
+  }
+
+  // If there was a load cell failure, stop the program. Otherwise, set the calibration values
+  if (loadcell_fail) {
+    while (true);
+  } else {
+    LoadCell_1.setCalFactor(CALIBRATION_VALUE_1); // user set calibration value (float)
+    LoadCell_2.setCalFactor(CALIBRATION_VALUE_2); // user set calibration value (float)
+    while (!LoadCell_1.update());
+    while (!LoadCell_2.update());
     Serial.println("Load Cell startup complete.");
   }
-  
+
   // ALL SD CARD SETUP
   Serial.print("Initializing SD card...");
   if (!SD.begin(chipSelect)) {
@@ -71,7 +92,7 @@ void setup() {
   }
 
   // Write headers to the CSV file
-  csvLogFile.println("Time (ms), Load Cell Weight (g)");
+  csvLogFile.println("Time (ms), Load Cell 1 Weight (g), Load Cell 2 Weight (g)");
   csvLogFile.flush();
 
   // Print successful start message
@@ -100,21 +121,25 @@ void loop() {
   static bool newDataReady = 0; // used to identify that new data is ready for retrieval
 
   // Check for new data/start next conversion:
-  if (LoadCell.update()) newDataReady = true;
+  if (LoadCell_1.update()) newDataReady = true;
+  LoadCell_2.update();
 
-  // Get smoothed value from the dataset:
+  // Get smoothed values from the dataset:
   if (newDataReady) {
     // If there is a write delay, check to make sure that amount of time has passed
     if (millis() > t + csv_write_delay) {
-      // Round the load cell value to an integer (this will be in grams)
-      int loadcell_val = round(LoadCell.getData());
+      // Round the load cell values to an integer (this will be in grams)
+      int loadcell_1_val = round(LoadCell_1.getData());
+      int loadcell_2_val = round(LoadCell_2.getData());
       // Write alternating values to the CSV file continuously
       if (csvLogFile) {
         currentIndex = currentIndex + 1;
         // Write the current milisecond value followed by the load cell value
         csvLogFile.print(millis());
         csvLogFile.print(",");
-        csvLogFile.println(loadcell_val);
+        csvLogFile.print(loadcell_1_val);
+        csvLogFile.print(",");
+        csvLogFile.println(loadcell_2_val);
 
         // Flush the file buffer to ensure data is written to the SD card
         csvLogFile.flush();
@@ -131,7 +156,6 @@ void loop() {
           while (true); // Stop if file opening fails again
         }
       }
-      t = millis();
     }
   }  
 }
